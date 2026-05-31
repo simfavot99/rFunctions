@@ -1,59 +1,53 @@
 # rFunctions
 
-Personal R utility package — a growing collection of helper functions for data
-exploration and analysis.
+Personal R utility package — a growing collection of helper functions for data exploration and analysis.
 
 - GitHub: <https://github.com/simfavot99/rFunctions>
 - Issues: <https://github.com/simfavot99/rFunctions/issues>
 
+------------------------------------------------------------------------
+
 ## Installation
 
-```r
+``` r
 # install.packages("devtools")
 devtools::install_github("simfavot99/rFunctions")
 ```
 
-## Functions
+------------------------------------------------------------------------
 
-### `eye_shiny(data, max_n = 50)`
+## `eye_shiny` — Interactive Variable Explorer
 
-Launches an interactive Shiny app for exploring the unique values and
-distributions of every variable in a data frame.
+Launches a Shiny app that lets you explore every variable in a data frame at a glance: frequency tables, distribution plots, and a plain-text summary you can copy and paste.
 
-```r
-eye_shiny(df)
+``` r
+eye_shiny(df)              # default: show up to 50 unique values
 eye_shiny(df, max_n = 100)
 ```
 
-**Arguments**
+### Explorer tab
+
+Three-column layout: pick a variable on the left, read its frequency table in the middle, and inspect its distribution on the right.
+
+<img src="images/paste-1.png" width="700"/>
+
+- **Variable list** — toggle between *All* (flat) and *By category* (grouped by type: Integer, Numeric, Character, Factor, Logical, Date).
+- **Frequency table** — values ordered from most to least frequent, with percentage and a colour-bar indicator. Capped at `max_n` (default 50).
+- **Distribution plot** — interactive (hover for exact values). Integer/Numeric → histogram with % y-axis. Character/Factor/Logical → horizontal bar chart. Date → daily count timeline.
+
+> A yellow warning banner appears automatically when all unique values share the same frequency.
+
+### Copy tab
+
+A read-only monospaced text area with the top 30 most frequent values + percentage for **every** variable, grouped by type. Click inside, press **Ctrl+A**, then **Ctrl+C**.
+
+<img src="images/paste-2.png" width="700"/>
+
+### Arguments
 
 | Argument | Default | Description |
-|----------|---------|-------------|
-| `data`   | —       | A data frame to explore. |
-| `max_n`  | `50`    | Max unique values shown in the Explorer table and bar chart. |
+|-----------------------|---------------------|-----------------------------|
+| `data` | — | A data frame to explore. |
+| `max_n` | `50` | Max unique values in the Explorer table and bar chart. The Copy tab always uses 30, independently. |
 
-**Explorer tab** (three-column layout)
-
-| Column | Content |
-|--------|---------|
-| Left   | Scrollable variable list. Toggle between *All* (flat) and *By category* (grouped by type: Integer, Numeric, Character, Factor, Logical, Date). |
-| Middle | Frequency table — values ordered from most to least frequent, with percentage and a colour-bar indicator. Capped at `max_n`. |
-| Right  | Interactive distribution plot (hover for exact values). Numeric/Integer → histogram with % y-axis. Categorical/Logical/Factor → horizontal bar chart. Date → daily count timeline. |
-
-**Special behaviours**
-
-- **Uniform distribution** — a yellow banner appears above both panels when all
-  unique values share the same frequency.
-- **Date variables** — the table panel shows a date-range badge (min → max),
-  unique count, and first/last sample dates.
-- **Integer vs Numeric** — `integer` columns are classified separately from
-  `double` columns so they appear in their own group.
-
-**Copy tab**
-
-A read-only monospaced text area with the full summary for every variable:
-top 30 most frequent values + percentage, grouped by variable type.
-Press **Ctrl+A** then **Ctrl+C** to copy the entire output.
-
-**Dependencies:** `shiny`, `bslib`, `ggiraph`, `ggplot2`, `DT`
-(installed automatically via `pacman` if missing).
+**Dependencies:** `shiny`, `bslib`, `ggiraph`, `ggplot2`, `DT` (installed automatically via `pacman` if missing).
