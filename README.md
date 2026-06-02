@@ -51,3 +51,27 @@ A read-only monospaced text area with the top 30 most frequent values + percenta
 | `max_n` | `50` | Max unique values in the Explorer table and bar chart. The Copy tab always uses 30, independently. |
 
 **Dependencies:** `shiny`, `bslib`, `ggiraph`, `ggplot2`, `DT` (installed automatically via `pacman` if missing).
+
+------------------------------------------------------------------------
+
+## `structure_of_dataset` — Dataset Structure Explorer
+
+Prints a compact overview of any data frame: dimensions, a `glimpse()`, a per-variable summary table, and frequency tables for every variable.
+
+``` r
+structure_of_dataset(df)
+```
+
+### Output
+
+1. **Dimensions + glimpse** — row/column count followed by `dplyr::glimpse()`.
+2. **Summary table** — one row per variable with: `type`, `n_unique`, `n_missing`, `pct_missing`, and `min` / `mean` / `median` / `max` (NA for non-numeric columns).
+3. **Frequency tables** — for each variable, up to 15 most frequent values with their count and percentage. A note is shown when all unique values share the same frequency.
+
+### Arguments
+
+| Argument | Default | Description |
+|----------|---------|-------------|
+| `df` | — | A data frame to explore. |
+
+**Dependencies:** `dplyr`, `purrr` (installed automatically via `pacman` if missing).

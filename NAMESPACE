@@ -2,3 +2,4 @@
 
 export(add)
 export(eye_shiny)
+export(structure_of_dataset)
